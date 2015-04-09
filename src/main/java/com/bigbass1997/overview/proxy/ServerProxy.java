@@ -4,7 +4,9 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 
 import com.bigbass1997.overview.handlers.BlockEventHandler;
+import com.bigbass1997.overview.handlers.ChatEventHandler;
 import com.bigbass1997.overview.handlers.ChestEventHandler;
+import com.bigbass1997.overview.handlers.CommandEventHandler;
 import com.bigbass1997.overview.handlers.ConnectionHandler;
 import com.bigbass1997.overview.util.MySQLControl;
 import com.bigbass1997.overview.util.Util;
@@ -38,6 +40,8 @@ public class ServerProxy extends CommonProxy {
 	public void init(){
 		MinecraftForge.EVENT_BUS.register(new BlockEventHandler());
 		MinecraftForge.EVENT_BUS.register(new ChestEventHandler());
+		MinecraftForge.EVENT_BUS.register(new ChatEventHandler());
+		MinecraftForge.EVENT_BUS.register(new CommandEventHandler());
 		
 		FMLCommonHandler.instance().bus().register(new ConnectionHandler());
 		

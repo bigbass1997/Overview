@@ -12,7 +12,7 @@ import cpw.mods.fml.common.event.FMLServerStoppingEvent;
 @Mod(modid = OverviewMod.MODID, version = OverviewMod.VERSION, acceptableRemoteVersions = "*")
 public class OverviewMod {
 	public static final String MODID = "Overview";
-	public static final String VERSION = "0.2";
+	public static final String VERSION = "0.3";
 	
 	@Mod.Instance(MODID)
 	public static OverviewMod instance;
