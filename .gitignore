@@ -1,0 +1,16 @@
+eclipse/
+bin/
+.gradle/2.0/taskArtifacts/cache.properties
+.gradle/2.0/taskArtifacts/cache.properties.lock
+.gradle/2.0/taskArtifacts/fileHashes.bin
+.gradle/2.0/taskArtifacts/fileSnapshots.bin
+.gradle/2.0/taskArtifacts/outputFileStates.bin
+.gradle/2.0/taskArtifacts/taskArtifacts.bin
+.gradle/gradle.log
+.settings/gradle/org.springsource.ide.eclipse.gradle.core.import.prefs
+.settings/gradle/org.springsource.ide.eclipse.gradle.core.prefs
+.settings/org.eclipse.jdt.core.prefs
+README.txt
+.classpath
+.project
+forge-1.7.10-10.13.2.1291-changelog.txt

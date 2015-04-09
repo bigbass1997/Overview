@@ -1,0 +1,16 @@
+[
+{
+  "modid": "Overview",
+  "name": "Overview",
+  "description": "Logs certain events such as block breaking and placing to a MySQL database.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["bigbass1997"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
