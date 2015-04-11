@@ -36,12 +36,12 @@ public class MySQLControl {
 		}
 	}
 	
-	public static void logEvent(String eventName, String displayName, int posX, int posY, int posZ, String blockName){
+	public static void logEvent(String eventName, String displayName, int posX, int posY, int posZ, String description){
 		if(isConnected){
 			Statement stmt;
 			try {
 				stmt = connection.createStatement();
-				stmt.execute("INSERT INTO events (eventName, displayName, posX, posY, posZ, blockName) VALUES('" + eventName + "','" + displayName + "','" + posX + "','" + posY + "','" + posZ + "','" + blockName + "')");
+				stmt.execute("INSERT INTO events (eventName, displayName, posX, posY, posZ, description) VALUES('" + eventName + "','" + displayName + "','" + posX + "','" + posY + "','" + posZ + "','" + description + "')");
 			} catch (SQLException e) {
 				if(Util.debug) e.printStackTrace();
 			}
