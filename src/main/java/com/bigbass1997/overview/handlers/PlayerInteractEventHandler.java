@@ -3,6 +3,7 @@ package com.bigbass1997.overview.handlers;
 import java.util.ArrayList;
 
 import com.bigbass1997.overview.util.MySQLControl;
+import com.bigbass1997.overview.util.Util;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.inventory.IInventory;
@@ -57,7 +58,7 @@ public class PlayerInteractEventHandler {
 							s = s.concat(", [" + stack.stackSize + "x] " + stack.getUnlocalizedName());
 						}
 					} catch (NoSuchMethodError error){
-						
+						if(Util.debug) Util.log.error("PlayerInteractEventHandler.getStackAsString() ifelse try NoSuchMethodError");
 					}
 				}
 			}

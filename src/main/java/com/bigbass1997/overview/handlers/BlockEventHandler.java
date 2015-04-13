@@ -26,6 +26,7 @@ public class BlockEventHandler {
 		try {
 			playername = ((BreakEvent) e).getPlayer().getDisplayName();
 		} catch (ClassCastException error){
+			if(Util.debug) Util.log.error("BlockEventHandler.logBlockEvent() try ClassCastException");
 			if(Util.debug) error.printStackTrace();
 		}
 		
@@ -33,6 +34,7 @@ public class BlockEventHandler {
 			try {
 				playername = ((PlaceEvent) e).player.getDisplayName();
 			} catch (ClassCastException error){
+				if(Util.debug) Util.log.error("BlockEventHandler.logBlockEvent() if(playername == null) try ClassCastException");
 				if(Util.debug) error.printStackTrace();
 			}
 		}

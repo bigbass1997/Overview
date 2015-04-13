@@ -17,8 +17,10 @@ public class MySQLControl {
 			connection = DriverManager.getConnection("jdbc:mysql://" + hostname + ":" + port + "/" + database, username, password);
 			isConnected = !connection.isClosed();
 		} catch (ClassNotFoundException e) {
+			if(Util.debug) Util.log.error("MySQLControl.init() ClassNotFoundException");
 			if(Util.debug) e.printStackTrace();
 		} catch (SQLException e) {
+			if(Util.debug) Util.log.error("MySQLControl.init() SQLException");
 			if(Util.debug) e.printStackTrace();
 		}
 		

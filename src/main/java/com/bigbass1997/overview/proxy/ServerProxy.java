@@ -33,6 +33,8 @@ public class ServerProxy extends CommonProxy {
 		username = config.get(Configuration.CATEGORY_GENERAL, "username", "root").getString();
 		password = config.get(Configuration.CATEGORY_GENERAL, "password", "toor").getString();
 		
+		Util.debug = config.get("debug", "enableDebug", false).getBoolean();
+		
 		config.save();
 	}
 	

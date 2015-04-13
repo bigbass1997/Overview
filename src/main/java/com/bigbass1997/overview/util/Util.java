@@ -10,7 +10,7 @@ public class Util {
 	
 	public static final Logger log = LogManager.getLogger("Overview");
 	
-	public static final boolean debug = false;
+	public static boolean debug = false;
 	
 	public static String getBlockName(Block block){
 		String blockname = "null";
@@ -18,6 +18,7 @@ public class Util {
 		try {
 			blockname = block.getLocalizedName();
 		} catch (NoSuchMethodError error){
+			if(debug) log.error("Util.getBlockName() block.getLocalizedName() NoSuchMethodError");
 			if(debug) error.printStackTrace();
 		}
 		
@@ -25,6 +26,7 @@ public class Util {
 			try {
 				blockname = block.getUnlocalizedName();
 			} catch (NoSuchMethodError error){
+				if(debug) log.error("Util.getBlockName() block.getUnlocalizedName() NoSuchMethodError");
 				if(debug) error.printStackTrace();
 			}
 		}
