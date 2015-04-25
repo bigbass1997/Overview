@@ -36,6 +36,5 @@ public class Util {
 	
 	public static ChatComponentText getChatComponent(String s){
 		return new ChatComponentText(s);
-		//TODO Add chat formating (e.g. colors etc)
 	}
 }

@@ -1,8 +1,12 @@
 package com.bigbass1997.overview.proxy;
 
+import net.minecraft.command.CommandHandler;
+import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 
+import com.bigbass1997.overview.commands.CommandOVReconnect;
+import com.bigbass1997.overview.commands.CommandOVStatus;
 import com.bigbass1997.overview.handlers.BlockEventHandler;
 import com.bigbass1997.overview.handlers.ChatEventHandler;
 import com.bigbass1997.overview.handlers.CommandEventHandler;
@@ -46,6 +50,10 @@ public class ServerProxy extends CommonProxy {
 		MinecraftForge.EVENT_BUS.register(new PlayerInteractEventHandler());
 		
 		FMLCommonHandler.instance().bus().register(new ConnectionHandler());
+
+		CommandHandler ch = (CommandHandler) MinecraftServer.getServer().getCommandManager();
+		ch.registerCommand(new CommandOVReconnect());
+		ch.registerCommand(new CommandOVStatus());
 		
 		MySQLControl.init(hostname, port, database, username, password);
 		

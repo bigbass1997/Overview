@@ -10,36 +10,46 @@ public class MySQLControl {
 	public static Connection connection;
 	public static boolean isConnected;
 	
-	public static void init(String hostname, int port, String database, String username, String password){
+	private static String hostname, database, username, password;
+	private static int port;
+	
+	public static void init(String newHostname, int newPort, String newDatabase, String newUsername, String newPassword){
+		hostname = newHostname;
+		port = newPort;
+		database = newDatabase;
+		username = newUsername;
+		password = newPassword;
+		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			
 			connection = DriverManager.getConnection("jdbc:mysql://" + hostname + ":" + port + "/" + database, username, password);
-			isConnected = !connection.isClosed();
+			isClosed();
 		} catch (ClassNotFoundException e) {
-			if(Util.debug) Util.log.error("MySQLControl.init() ClassNotFoundException");
+			Util.log.error("MySQLControl.init() ClassNotFoundException");
 			if(Util.debug) e.printStackTrace();
 		} catch (SQLException e) {
-			if(Util.debug) Util.log.error("MySQLControl.init() SQLException");
+			Util.log.error("MySQLControl.init() SQLException");
 			if(Util.debug) e.printStackTrace();
 		}
 		
 		if(!isConnected){
 			Util.log.warn("MySQL Connection FAILED! Logging will not work for this session.");
-			Util.log.warn("To retry connection, restart server. (Command will be added in the future)");
+			Util.log.warn("To retry connection, type /ovreconnect");
 		}
 	}
 	
 	public static void close(){
 		try {
-			if(connection != null && isConnected) connection.close();
+			if(!isClosed()) connection.close();
+			isClosed();
 		} catch (SQLException e) {
 			if(Util.debug) e.printStackTrace();
 		}
 	}
 	
 	public static void logEvent(String eventName, String displayName, int posX, int posY, int posZ, String description){
-		if(isConnected){
+		if(!isClosed()){
 			Statement stmt;
 			try {
 				stmt = connection.createStatement();
@@ -48,5 +58,36 @@ public class MySQLControl {
 				if(Util.debug) e.printStackTrace();
 			}
 		}
+	}
+	
+	public static void reconnect(){
+		try {
+			if(isClosed()){
+				connection = DriverManager.getConnection("jdbc:mysql://" + hostname + ":" + port + "/" + database, username, password);
+			}
+		} catch (SQLException e) {
+			Util.log.error("MySQLControl.init() SQLException");
+			if(Util.debug) e.printStackTrace();
+		}
+	}
+	
+	public static boolean isClosed(){
+		if(connection == null){
+			isConnected = true;
+			return true;
+		} else
+			try {
+				if(connection.isClosed()){
+					isConnected = true;
+					return true;
+				} else {
+					isConnected = false;
+					return false;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				isConnected = true;
+				return true;
+			}
 	}
 }
