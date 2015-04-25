@@ -49,7 +49,7 @@ public class MySQLControl {
 	}
 	
 	public static void logEvent(String eventName, String displayName, int posX, int posY, int posZ, String description){
-		if(!isClosed()){
+		if(isConnected){
 			Statement stmt;
 			try {
 				stmt = connection.createStatement();
@@ -73,20 +73,20 @@ public class MySQLControl {
 	
 	public static boolean isClosed(){
 		if(connection == null){
-			isConnected = true;
+			isConnected = false;
 			return true;
 		} else
 			try {
 				if(connection.isClosed()){
-					isConnected = true;
+					isConnected = false;
 					return true;
 				} else {
-					isConnected = false;
+					isConnected = true;
 					return false;
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
-				isConnected = true;
+				isConnected = false;
 				return true;
 			}
 	}
