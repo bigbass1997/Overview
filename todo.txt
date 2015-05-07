@@ -1,0 +1,4 @@
+TODO:
+
+- Add filtering for each category
+- Add DIM-ID category
