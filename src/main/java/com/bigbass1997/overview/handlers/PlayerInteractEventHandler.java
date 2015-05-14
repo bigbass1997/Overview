@@ -18,7 +18,7 @@ public class PlayerInteractEventHandler {
 		TileEntity te = e.world.getTileEntity(e.x, e.y, e.z);
 		
 		if(te instanceof IInventory){
-			MySQLControl.logEvent("PlayerInteract_ChestOpened", e.entityPlayer.getDisplayName(), e.x, e.y, e.z, getStacksAsString((IInventory) te));
+			MySQLControl.logEvent("InventoryOpened", e.entityPlayer.getDisplayName(), e.world.provider.dimensionId, e.x, e.y, e.z, getStacksAsString((IInventory) te));
 		}
 	}
 	

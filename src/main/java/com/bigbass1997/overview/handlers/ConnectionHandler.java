@@ -15,6 +15,7 @@ public class ConnectionHandler {
 		MySQLControl.logEvent(
 				"PlayerLoggedIn",
 				player.getDisplayName(),
+				e.player.dimension,
 				(int) player.posX,
 				(int) player.posY,
 				(int) player.posZ,

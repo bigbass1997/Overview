@@ -38,7 +38,6 @@ public class BlockEventHandler {
 				if(Util.debug) error.printStackTrace();
 			}
 		}
-		
-		MySQLControl.logEvent(eventType, playername, e.x, e.y, e.z, Util.getBlockName(e.block));
+		MySQLControl.logEvent(eventType, playername, e.world.provider.dimensionId, e.x, e.y, e.z, Util.getBlockName(e.block));
 	}
 }

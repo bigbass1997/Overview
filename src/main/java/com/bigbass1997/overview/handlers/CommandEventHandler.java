@@ -17,6 +17,6 @@ public class CommandEventHandler {
 		
 		Util.log.info("CommandEvent by " + e.sender.getCommandSenderName() + ": " + e.command.getCommandName() + " " + s);
 		
-		MySQLControl.logEvent("CommandEvent", e.sender.getCommandSenderName(), e.sender.getPlayerCoordinates().posX, e.sender.getPlayerCoordinates().posY, e.sender.getPlayerCoordinates().posZ, e.command.getCommandName() + " " + s);
+		MySQLControl.logEvent("CommandEvent", e.sender.getCommandSenderName(), e.sender.getEntityWorld().provider.dimensionId, e.sender.getPlayerCoordinates().posX, e.sender.getPlayerCoordinates().posY, e.sender.getPlayerCoordinates().posZ, e.command.getCommandName() + " " + s);
 	}
 }

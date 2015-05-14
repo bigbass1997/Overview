@@ -9,6 +9,6 @@ public class ChatEventHandler {
 	
 	@SubscribeEvent
 	public void onServerChat(ServerChatEvent e){
-		MySQLControl.logEvent("ServerChatEvent", e.username, (int) e.player.posX, (int) e.player.posY, (int) e.player.posZ, e.message);
+		MySQLControl.logEvent("ServerChatEvent", e.username, e.player.dimension, (int) e.player.posX, (int) e.player.posY, (int) e.player.posZ, e.message);
 	}
 }
