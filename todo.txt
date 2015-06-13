@@ -1,4 +1,5 @@
 TODO:
 
-- Add filtering for each category
-- Add DIM-ID category
+- Add DB table config option
+- Add event locale config options
+- Add filters
