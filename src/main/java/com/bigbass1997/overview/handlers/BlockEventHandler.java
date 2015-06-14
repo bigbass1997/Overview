@@ -13,12 +13,12 @@ public class BlockEventHandler {
 	
 	@SubscribeEvent
 	public void onBlockBreak(final BlockEvent.BreakEvent e){
-		logBlockEvent(e, "BlockBreak");
+		logBlockEvent(e, "BlockBreakEvent");
 	}
 	
 	@SubscribeEvent
 	public void onBlockPlace(final BlockEvent.PlaceEvent e){
-		logBlockEvent(e, "BlockPlace");
+		logBlockEvent(e, "BlockPlaceEvent");
 	}
 	
 	private void logBlockEvent(BlockEvent e, String eventType){

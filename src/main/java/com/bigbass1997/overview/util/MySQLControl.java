@@ -52,7 +52,11 @@ public class MySQLControl {
 	}
 	
 	public static void logEvent(String eventName, String displayName, int worldID, int posX, int posY, int posZ, String description){
-		new LogThread(dbTable, eventName, displayName, worldID, posX, posY, posZ, description){
+		
+		String convertedEventName = ConfigManager.eventNames.get(eventName);
+		if(convertedEventName == null || convertedEventName == "") convertedEventName = eventName;
+		
+		new LogThread(dbTable, convertedEventName, displayName, worldID, posX, posY, posZ, description){
 			
 			@Override
 			public void run(){

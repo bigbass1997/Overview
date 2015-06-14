@@ -8,5 +8,16 @@
 		"password": "toor"
 	},
 	
+	"locale": {
+		"events": {
+			"BlockBreakEvent": "BlockBreak",
+			"BlockPlaceEvent": "BlockPlace",
+			"ServerChatEvent": "ServerChat",
+			"CommandEvent": "Command",
+			"PlayerLoggedInEvent": "PlayerLoggedIn",
+			"InventoryOpenedEvent": "InventoryOpened"
+		}
+	},
+	
 	"debug": false
 }

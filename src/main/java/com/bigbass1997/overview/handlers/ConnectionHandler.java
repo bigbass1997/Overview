@@ -13,7 +13,7 @@ public class ConnectionHandler {
 		EntityPlayer player = e.player;
 		
 		MySQLControl.logEvent(
-				"PlayerLoggedIn",
+				"PlayerLoggedInEvent",
 				player.getDisplayName(),
 				e.player.dimension,
 				(int) player.posX,
