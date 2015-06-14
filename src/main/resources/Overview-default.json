@@ -1,0 +1,12 @@
+{
+	"mysql": {
+		"hostname": "hostname.com",
+		"database": "database_name",
+		"dbTable": "db_overview",
+		"port": 3306,
+		"username": "root",
+		"password": "toor"
+	},
+	
+	"debug": false
+}

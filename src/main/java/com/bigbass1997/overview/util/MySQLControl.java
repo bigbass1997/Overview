@@ -5,20 +5,23 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.bigbass1997.overview.ConfigManager;
+
 public class MySQLControl {
 	
 	public static Connection connection;
 	public static boolean isConnected;
 	
-	private static String hostname, database, username, password;
+	private static String hostname, database, username, password, dbTable;
 	private static int port;
 	
-	public static void init(String newHostname, int newPort, String newDatabase, String newUsername, String newPassword){
-		hostname = newHostname;
-		port = newPort;
-		database = newDatabase;
-		username = newUsername;
-		password = newPassword;
+	public static void init(){
+		hostname = ConfigManager.hostname;
+		port = ConfigManager.port;
+		database = ConfigManager.database;
+		username = ConfigManager.username;
+		password = ConfigManager.password;
+		dbTable = ConfigManager.dbTable;
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -27,10 +30,10 @@ public class MySQLControl {
 			isClosed();
 		} catch (ClassNotFoundException e) {
 			Util.log.error("MySQLControl.init() ClassNotFoundException");
-			if(Util.debug) e.printStackTrace();
+			if(ConfigManager.debug) e.printStackTrace();
 		} catch (SQLException e) {
 			Util.log.error("MySQLControl.init() SQLException");
-			if(Util.debug) e.printStackTrace();
+			if(ConfigManager.debug) e.printStackTrace();
 		}
 		
 		if(!isConnected){
@@ -44,12 +47,12 @@ public class MySQLControl {
 			if(!isClosed()) connection.close();
 			isClosed();
 		} catch (SQLException e) {
-			if(Util.debug) e.printStackTrace();
+			if(ConfigManager.debug) e.printStackTrace();
 		}
 	}
 	
 	public static void logEvent(String eventName, String displayName, int worldID, int posX, int posY, int posZ, String description){
-		new LogThread(eventName, displayName, worldID, posX, posY, posZ, description){
+		new LogThread(dbTable, eventName, displayName, worldID, posX, posY, posZ, description){
 			
 			@Override
 			public void run(){
@@ -57,9 +60,9 @@ public class MySQLControl {
 					Statement stmt;
 					try {
 						stmt = connection.createStatement();
-						stmt.execute("INSERT INTO events (eventName, displayName, worldID, posX, posY, posZ, description) VALUES('" + eventName + "','" + displayName + "','" + worldID + "','" + posX + "','" + posY + "','" + posZ + "','" + description + "')");
+						stmt.execute("INSERT INTO `" + dbTable + "` (eventName, displayName, worldID, posX, posY, posZ, description) VALUES('" + eventName + "','" + displayName + "','" + worldID + "','" + posX + "','" + posY + "','" + posZ + "','" + description + "')");
 					} catch (SQLException e) {
-						if(Util.debug) e.printStackTrace();
+						if(ConfigManager.debug) e.printStackTrace();
 					}
 				}
 			}
@@ -73,8 +76,8 @@ public class MySQLControl {
 				connection = DriverManager.getConnection("jdbc:mysql://" + hostname + ":" + port + "/" + database, username, password);
 			}
 		} catch (SQLException e) {
-			Util.log.error("MySQLControl.init() SQLException");
-			if(Util.debug) e.printStackTrace();
+			Util.log.error("MySQLControl.reconnect() SQLException");
+			if(ConfigManager.debug) e.printStackTrace();
 		}
 	}
 	
@@ -82,7 +85,7 @@ public class MySQLControl {
 		if(connection == null){
 			isConnected = false;
 			return true;
-		} else
+		} else {
 			try {
 				if(connection.isClosed()){
 					isConnected = false;
@@ -96,5 +99,6 @@ public class MySQLControl {
 				isConnected = false;
 				return true;
 			}
+		}
 	}
 }

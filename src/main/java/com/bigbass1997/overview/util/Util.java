@@ -6,11 +6,11 @@ import net.minecraft.util.ChatComponentText;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.bigbass1997.overview.ConfigManager;
+
 public class Util {
 	
 	public static final Logger log = LogManager.getLogger("Overview");
-	
-	public static boolean debug = false;
 	
 	public static String getBlockName(Block block){
 		String blockname = "null";
@@ -18,16 +18,16 @@ public class Util {
 		try {
 			blockname = block.getLocalizedName();
 		} catch (NoSuchMethodError error){
-			if(debug) log.error("Util.getBlockName() block.getLocalizedName() NoSuchMethodError");
-			if(debug) error.printStackTrace();
+			if(ConfigManager.debug) log.error("Util.getBlockName() block.getLocalizedName() NoSuchMethodError");
+			if(ConfigManager.debug) error.printStackTrace();
 		}
 		
 		if(blockname == "null"){
 			try {
 				blockname = block.getUnlocalizedName();
 			} catch (NoSuchMethodError error){
-				if(debug) log.error("Util.getBlockName() block.getUnlocalizedName() NoSuchMethodError");
-				if(debug) error.printStackTrace();
+				if(ConfigManager.debug) log.error("Util.getBlockName() block.getUnlocalizedName() NoSuchMethodError");
+				if(ConfigManager.debug) error.printStackTrace();
 			}
 		}
 		

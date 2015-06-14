@@ -3,3 +3,4 @@ TODO:
 - Add DB table config option
 - Add event locale config options
 - Add filters
+- Add DB auto-reconnect instead of manual command
