@@ -6,6 +6,7 @@ import net.minecraftforge.common.MinecraftForge;
 
 import com.bigbass1997.overview.ConfigManager;
 import com.bigbass1997.overview.commands.CommandOVReconnect;
+import com.bigbass1997.overview.commands.CommandOVReloadConfig;
 import com.bigbass1997.overview.commands.CommandOVStatus;
 import com.bigbass1997.overview.handlers.BlockEventHandler;
 import com.bigbass1997.overview.handlers.ChatEventHandler;
@@ -41,6 +42,7 @@ public class ServerProxy extends CommonProxy {
 		CommandHandler ch = (CommandHandler) MinecraftServer.getServer().getCommandManager();
 		ch.registerCommand(new CommandOVReconnect());
 		ch.registerCommand(new CommandOVStatus());
+		ch.registerCommand(new CommandOVReloadConfig());
 		
 		MySQLControl.init();
 		

@@ -63,6 +63,35 @@ public class ConfigManager {
 		eventNames.put("InventoryOpenedEvent", eventsConfig.get("InventoryOpenedEvent").getAsString());
 	}
 	
+	public static void reloadConfig(){
+		configJson = new JsonParser().parse(readFile(configJsonPath)).getAsJsonObject();
+		
+		//--
+		
+		JsonObject mysqlConfig = configJson.getAsJsonObject("mysql");
+		hostname = mysqlConfig.get("hostname").getAsString();
+		database = mysqlConfig.get("database").getAsString();
+		username = mysqlConfig.get("username").getAsString();
+		password = mysqlConfig.get("password").getAsString();
+		dbTable = mysqlConfig.get("dbTable").getAsString();
+		port = mysqlConfig.get("port").getAsInt();
+		
+		//--
+		
+		debug = configJson.get("debug").getAsBoolean();
+		
+		//--
+		
+		eventNames = new Hashtable<String, String>();
+		JsonObject eventsConfig = configJson.getAsJsonObject("locale").getAsJsonObject("events");
+		eventNames.put("BlockBreakEvent", eventsConfig.get("BlockBreakEvent").getAsString());
+		eventNames.put("BlockPlaceEvent", eventsConfig.get("BlockPlaceEvent").getAsString());
+		eventNames.put("ServerChatEvent", eventsConfig.get("ServerChatEvent").getAsString());
+		eventNames.put("CommandEvent", eventsConfig.get("CommandEvent").getAsString());
+		eventNames.put("PlayerLoggedInEvent", eventsConfig.get("PlayerLoggedInEvent").getAsString());
+		eventNames.put("InventoryOpenedEvent", eventsConfig.get("InventoryOpenedEvent").getAsString());
+	}
+	
 	private static void createConfig(FMLPreInitializationEvent e){
 		try {
 			File file = new File(configJsonPath);

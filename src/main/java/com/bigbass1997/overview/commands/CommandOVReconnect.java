@@ -21,13 +21,16 @@ public class CommandOVReconnect extends CommandBase {
 	@Override
 	public void processCommand(ICommandSender sender, String[] args) {
 		sender.addChatMessage(Util.getChatComponent("Attempting MySQL Reconnect..."));
-		if(!MySQLControl.isClosed()){
+		
+		MySQLControl.checkConnection();
+		
+		if(MySQLControl.isConnected){
 			sender.addChatMessage(Util.getChatComponent("Overview is already connected to the MySQL Database."));
 			return;
 		} else {
 			MySQLControl.reconnect();
 		}
-		sender.addChatMessage(Util.getChatComponent("New MySQL Status: " + MySQLControl.isClosed()));
+		sender.addChatMessage(Util.getChatComponent("New MySQL Status: " + MySQLControl.isConnected));
 		sender.addChatMessage(Util.getChatComponent("For more detailed info type /ovstatus"));
 	}
 

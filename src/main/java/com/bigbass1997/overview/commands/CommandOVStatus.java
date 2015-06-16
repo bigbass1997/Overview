@@ -20,11 +20,9 @@ public class CommandOVStatus extends CommandBase {
 
 	@Override
 	public void processCommand(ICommandSender sender, String[] args) {
-		boolean isConnected = !MySQLControl.isClosed();
+		sender.addChatMessage(Util.getChatComponent("MySQL Connection Status: " + MySQLControl.isConnected));
 		
-		sender.addChatMessage(Util.getChatComponent("MySQL Connection Status: " + isConnected));
-		
-		if(!isConnected) sender.addChatMessage(Util.getChatComponent("Connection Object: null"));
+		if(!MySQLControl.isConnected) sender.addChatMessage(Util.getChatComponent("Connection Object: null"));
 		else sender.addChatMessage(Util.getChatComponent("Connection Object:" + MySQLControl.connection.toString()));
 	}
 

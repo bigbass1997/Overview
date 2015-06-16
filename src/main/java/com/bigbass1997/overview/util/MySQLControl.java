@@ -15,6 +15,8 @@ public class MySQLControl {
 	private static String hostname, database, username, password, dbTable;
 	private static int port;
 	
+	private static float lastTimeCheck = -1.0f;
+	
 	public static void init(){
 		hostname = ConfigManager.hostname;
 		port = ConfigManager.port;
@@ -27,7 +29,7 @@ public class MySQLControl {
 			Class.forName("com.mysql.jdbc.Driver");
 			
 			connection = DriverManager.getConnection("jdbc:mysql://" + hostname + ":" + port + "/" + database, username, password);
-			isClosed();
+			checkConnection();
 		} catch (ClassNotFoundException e) {
 			Util.log.error("MySQLControl.init() ClassNotFoundException");
 			if(ConfigManager.debug) e.printStackTrace();
@@ -43,24 +45,26 @@ public class MySQLControl {
 	}
 	
 	public static void close(){
+		checkConnection();
+		
 		try {
-			if(!isClosed()) connection.close();
-			isClosed();
+			if(isConnected) connection.close();
 		} catch (SQLException e) {
 			if(ConfigManager.debug) e.printStackTrace();
 		}
 	}
 	
 	public static void logEvent(String eventName, String displayName, int worldID, int posX, int posY, int posZ, String description){
+		checkConnection();
 		
-		String convertedEventName = ConfigManager.eventNames.get(eventName);
-		if(convertedEventName == null || convertedEventName == "") convertedEventName = eventName;
-		
-		new LogThread(dbTable, convertedEventName, displayName, worldID, posX, posY, posZ, description){
+		if(isConnected){
+			String convertedEventName = ConfigManager.eventNames.get(eventName);
+			if(convertedEventName == null || convertedEventName == "") convertedEventName = eventName;
 			
-			@Override
-			public void run(){
-				if(isConnected){
+			new LogThread(dbTable, convertedEventName, displayName, worldID, posX, posY, posZ, description){
+				
+				@Override
+				public void run(){
 					Statement stmt;
 					try {
 						stmt = connection.createStatement();
@@ -69,15 +73,20 @@ public class MySQLControl {
 						if(ConfigManager.debug) e.printStackTrace();
 					}
 				}
-			}
-			
-		}.start();
+				
+			}.start();
+		} else {
+			MySQLControl.autoReconnect();
+		}
 	}
 	
 	public static void reconnect(){
+		checkConnection();
+		
 		try {
-			if(isClosed()){
+			if(!isConnected){
 				connection = DriverManager.getConnection("jdbc:mysql://" + hostname + ":" + port + "/" + database, username, password);
+				checkConnection();
 			}
 		} catch (SQLException e) {
 			Util.log.error("MySQLControl.reconnect() SQLException");
@@ -85,23 +94,30 @@ public class MySQLControl {
 		}
 	}
 	
-	public static boolean isClosed(){
-		if(connection == null){
-			isConnected = false;
-			return true;
-		} else {
-			try {
-				if(connection.isClosed()){
-					isConnected = false;
-					return true;
-				} else {
-					isConnected = true;
-					return false;
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
+	public static void checkConnection(){
+		try {
+			if(connection == null){
 				isConnected = false;
-				return true;
+			} else if(connection.isClosed()){
+				isConnected = false;
+			} else {
+				isConnected = true;
+			}
+		} catch (SQLException e) {
+			if(ConfigManager.debug) e.printStackTrace();
+			isConnected = false;
+		}
+	}
+	
+	public static void autoReconnect(){
+		if(lastTimeCheck == -1.0f){
+			lastTimeCheck = System.nanoTime();
+			return;
+		} else {
+			if((System.nanoTime() - lastTimeCheck) > 60000000000.0f){
+				if(ConfigManager.debug) Util.log.info("Attempting auto-reconnect!");
+				if(!MySQLControl.isConnected) reconnect();
+				lastTimeCheck = System.nanoTime();
 			}
 		}
 	}
