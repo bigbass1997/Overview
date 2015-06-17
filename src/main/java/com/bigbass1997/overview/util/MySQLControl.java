@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.bigbass1997.overview.ConfigManager;
+import com.bigbass1997.overview.FilterManager;
+import com.bigbass1997.overview.Filters;
 
 public class MySQLControl {
 	
@@ -65,6 +67,15 @@ public class MySQLControl {
 				
 				@Override
 				public void run(){
+					
+					if(FilterManager.containsFilterMaterial(Filters.EVENT_NAME, eventName) ||
+							FilterManager.containsFilterMaterial(Filters.DISPLAY_NAME, displayName) ||
+							FilterManager.containsFilterMaterial(Filters.WORLD_ID, String.valueOf(worldID)) ||
+							FilterManager.containsFilterMaterial(Filters.POS_X, String.valueOf(posX)) ||
+							FilterManager.containsFilterMaterial(Filters.POS_Y, String.valueOf(posY)) ||
+							FilterManager.containsFilterMaterial(Filters.POS_Z, String.valueOf(posZ)) ||
+							FilterManager.containsFilterMaterial(Filters.DESCRIPTION, description)) return;
+					
 					Statement stmt;
 					try {
 						stmt = connection.createStatement();

@@ -18,6 +18,16 @@
 			"InventoryOpenedEvent": "InventoryOpened"
 		}
 	},
+    
+    "filter": {
+        "eventName": [],
+        "displayName": [],
+        "worldID": [],
+        "posX": [],
+        "posY": [],
+        "posZ": [],
+        "description": []
+    },
 	
 	"debug": false
 }

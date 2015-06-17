@@ -1,4 +1,3 @@
 TODO:
 
-- Add filters
-- Add DB auto-reconnect instead of manual command
+- Advanced filtering

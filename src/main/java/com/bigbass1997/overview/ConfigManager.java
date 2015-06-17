@@ -6,11 +6,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 import org.apache.commons.io.FileUtils;
 
 import com.bigbass1997.overview.util.Util;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -61,6 +63,55 @@ public class ConfigManager {
 		eventNames.put("CommandEvent", eventsConfig.get("CommandEvent").getAsString());
 		eventNames.put("PlayerLoggedInEvent", eventsConfig.get("PlayerLoggedInEvent").getAsString());
 		eventNames.put("InventoryOpenedEvent", eventsConfig.get("InventoryOpenedEvent").getAsString());
+		
+		//--
+		
+		Hashtable<Filters, ArrayList<String>> filters = new Hashtable<Filters, ArrayList<String>>();
+		JsonObject filtersConfig = configJson.getAsJsonObject("filter");
+		
+		ArrayList<String> eventName = new ArrayList<String>();
+		for(JsonElement el : filtersConfig.getAsJsonArray("eventName")){
+			eventName.add(el.getAsString());
+		}
+		filters.put(Filters.EVENT_NAME, eventName);
+
+		ArrayList<String> displayName = new ArrayList<String>();
+		for(JsonElement el : filtersConfig.getAsJsonArray("displayName")){
+			displayName.add(el.getAsString());
+		}
+		filters.put(Filters.DISPLAY_NAME, displayName);
+
+		ArrayList<String> worldID = new ArrayList<String>();
+		for(JsonElement el : filtersConfig.getAsJsonArray("worldID")){
+			worldID.add(String.valueOf(el.getAsInt()));
+		}
+		filters.put(Filters.WORLD_ID, worldID);
+
+		ArrayList<String> posX = new ArrayList<String>();
+		for(JsonElement el : filtersConfig.getAsJsonArray("posX")){
+			posX.add(String.valueOf(el.getAsInt()));
+		}
+		filters.put(Filters.POS_X, posX);
+
+		ArrayList<String> posY = new ArrayList<String>();
+		for(JsonElement el : filtersConfig.getAsJsonArray("posY")){
+			posY.add(String.valueOf(el.getAsInt()));
+		}
+		filters.put(Filters.POS_Y, posY);
+
+		ArrayList<String> posZ = new ArrayList<String>();
+		for(JsonElement el : filtersConfig.getAsJsonArray("posZ")){
+			posZ.add(String.valueOf(el.getAsInt()));
+		}
+		filters.put(Filters.POS_Z, posZ);
+		
+		ArrayList<String> description = new ArrayList<String>();
+		for(JsonElement el : filtersConfig.getAsJsonArray("description")){
+			description.add(el.getAsString());
+		}
+		filters.put(Filters.DESCRIPTION, description);
+		
+		FilterManager.filters = filters;
 	}
 	
 	public static void reloadConfig(){
@@ -90,6 +141,55 @@ public class ConfigManager {
 		eventNames.put("CommandEvent", eventsConfig.get("CommandEvent").getAsString());
 		eventNames.put("PlayerLoggedInEvent", eventsConfig.get("PlayerLoggedInEvent").getAsString());
 		eventNames.put("InventoryOpenedEvent", eventsConfig.get("InventoryOpenedEvent").getAsString());
+		
+		//--
+		
+		Hashtable<Filters, ArrayList<String>> filters = new Hashtable<Filters, ArrayList<String>>();
+		JsonObject filtersConfig = configJson.getAsJsonObject("filter");
+		
+		ArrayList<String> eventName = new ArrayList<String>();
+		for(JsonElement el : filtersConfig.getAsJsonArray("eventName")){
+			eventName.add(el.getAsString());
+		}
+		filters.put(Filters.EVENT_NAME, eventName);
+
+		ArrayList<String> displayName = new ArrayList<String>();
+		for(JsonElement el : filtersConfig.getAsJsonArray("displayName")){
+			displayName.add(el.getAsString());
+		}
+		filters.put(Filters.DISPLAY_NAME, displayName);
+
+		ArrayList<String> worldID = new ArrayList<String>();
+		for(JsonElement el : filtersConfig.getAsJsonArray("worldID")){
+			worldID.add(String.valueOf(el.getAsInt()));
+		}
+		filters.put(Filters.WORLD_ID, worldID);
+
+		ArrayList<String> posX = new ArrayList<String>();
+		for(JsonElement el : filtersConfig.getAsJsonArray("posX")){
+			posX.add(String.valueOf(el.getAsInt()));
+		}
+		filters.put(Filters.POS_X, posX);
+
+		ArrayList<String> posY = new ArrayList<String>();
+		for(JsonElement el : filtersConfig.getAsJsonArray("posY")){
+			posY.add(String.valueOf(el.getAsInt()));
+		}
+		filters.put(Filters.POS_Y, posY);
+
+		ArrayList<String> posZ = new ArrayList<String>();
+		for(JsonElement el : filtersConfig.getAsJsonArray("posZ")){
+			posZ.add(String.valueOf(el.getAsInt()));
+		}
+		filters.put(Filters.POS_Z, posZ);
+		
+		ArrayList<String> description = new ArrayList<String>();
+		for(JsonElement el : filtersConfig.getAsJsonArray("description")){
+			description.add(el.getAsString());
+		}
+		filters.put(Filters.DESCRIPTION, description);
+		
+		FilterManager.filters = filters;
 	}
 	
 	private static void createConfig(FMLPreInitializationEvent e){
